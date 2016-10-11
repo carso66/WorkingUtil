@@ -17,7 +17,7 @@ public class ExportFile {
 	private static String desAddress = "";
 
 	// 项目名称
-	private static String projectName = "ApiService";
+	private static String projectName = "reportinterface";
 
 	public static void main(String[] args) {
 		System.out.println("----Start----");
@@ -84,22 +84,24 @@ public class ExportFile {
 		List<File> fileList = new ArrayList<File>();
 		// 首先去指定目录下查找文件
 		Util.findFiles(srcAddress + "\\" + projectName, fileNameFilter(file.getName()), fileList);
-		File srcFile = fileList.get(0);
-		String parentFolderName = srcFile.getParent();
-		String[] pathArray = parentFolderName.split(projectName + "\\\\");
-		// 取出文件的父路径，添加到目标目录地址下
-		String desFolder = desAddress + "\\" + projectName + "\\" + pathArray[1];
-		File parentFolder = new File(desFolder);
-		if (!parentFolder.exists()) {
-			parentFolder.mkdirs();
-		}
-		// 复制文件到指定目录下
-		try {
-			File desFile = new File(parentFolder.getAbsoluteFile() + "\\" + srcFile.getName());
-			copyFile(srcFile, desFile);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		
+		for(File srcFile :fileList){
+			String parentFolderName = srcFile.getParent();
+			String[] pathArray = parentFolderName.split(projectName + "\\\\");
+			// 取出文件的父路径，添加到目标目录地址下
+			String desFolder = desAddress + "\\" + projectName + "\\" + pathArray[1];
+			File parentFolder = new File(desFolder);
+			if (!parentFolder.exists()) {
+				parentFolder.mkdirs();
+			}
+			// 复制文件到指定目录下
+			try {
+				//File desFile = new File(parentFolder.getAbsolutePath() + "\\" + srcFile.getName());
+				copyFile(srcFile, parentFolder);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}	
+		}		
 	}
 
 	
@@ -124,10 +126,13 @@ public class ExportFile {
 	 * @param fileIn
 	 *            要被copy的文件
 	 * @param fileOutPut
-	 *            将文件copy到那个目录下面 (此处为目录+要复制的文件名 例如C:\folder + \ + fileName)
+	 *            将文件copy到那个目录下面 
 	 * @throws Exception
 	 */
 	private static void copyFile(File fileIn, File fileOutPut) throws Exception {
+		if(fileOutPut.isDirectory()){
+			fileOutPut = new File(fileOutPut.getAbsolutePath() + "\\" + fileIn.getName());
+		}
 		FileInputStream fileInputStream = new FileInputStream(fileIn);
 		FileOutputStream fileOutputStream = new FileOutputStream(fileOutPut);
 		byte[] by = new byte[1024];
