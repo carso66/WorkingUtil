@@ -8,11 +8,11 @@ import java.util.List;
 
 public class Util {
 	
-	// ±àÂë·½Ê½
+	// ç¼–ç æ–¹å¼
 	public static String encoding = "UTF-8";
 	
 	/**
-	 * »ñÈ¡ÎÄ¼şÀ©Õ¹Ãû
+	 * è·å–æ–‡ä»¶æ‰©å±•å
 	 * 
 	 * @param filename
 	 * @return
@@ -28,7 +28,7 @@ public class Util {
 	}
 
 	/**
-	 * »ñÈ¡²»´øÀ©Õ¹ÃûµÄÎÄ¼şÃû
+	 * è·å–ä¸å¸¦æ‰©å±•åçš„æ–‡ä»¶å
 	 * 
 	 * @param filename
 	 * @return
@@ -44,25 +44,25 @@ public class Util {
 	}
 	
 	/**
-	 * µİ¹é²éÕÒÎÄ¼ş
+	 * é€’å½’æŸ¥æ‰¾æ–‡ä»¶
 	 * 
 	 * @param baseDirName
-	 *            ²éÕÒµÄÎÄ¼ş¼ĞÂ·¾¶
+	 *            æŸ¥æ‰¾çš„æ–‡ä»¶å¤¹è·¯å¾„
 	 * @param targetFileName
-	 *            ĞèÒª²éÕÒµÄÎÄ¼şÃû
+	 *            éœ€è¦æŸ¥æ‰¾çš„æ–‡ä»¶å
 	 * @param fileList
-	 *            ²éÕÒµ½µÄÎÄ¼ş¼¯ºÏ
+	 *            æŸ¥æ‰¾åˆ°çš„æ–‡ä»¶é›†åˆ
 	 */
 	public static void findFiles(String baseDirName, String targetFileName, List<File> fileList) {
 		/**
-		 * Ëã·¨¼òÊö£º ´ÓÄ³¸ö¸ø¶¨µÄĞè²éÕÒµÄÎÄ¼ş¼Ğ³ö·¢£¬ËÑË÷¸ÃÎÄ¼ş¼ĞµÄËùÓĞ×ÓÎÄ¼ş¼Ğ¼°ÎÄ¼ş£¬
-		 * ÈôÎªÎÄ¼ş£¬Ôò½øĞĞÆ¥Åä£¬Æ¥Åä³É¹¦Ôò¼ÓÈë½á¹û¼¯£¬ÈôÎª×ÓÎÄ¼ş¼Ğ£¬Ôò½ø¶ÓÁĞ¡£ ¶ÓÁĞ²»¿Õ£¬ÖØ¸´ÉÏÊö²Ù×÷£¬¶ÓÁĞÎª¿Õ£¬³ÌĞò½áÊø£¬·µ»Ø½á¹û¡£
+		 * ç®—æ³•ç®€è¿°ï¼š ä»æŸä¸ªç»™å®šçš„éœ€æŸ¥æ‰¾çš„æ–‡ä»¶å¤¹å‡ºå‘ï¼Œæœç´¢è¯¥æ–‡ä»¶å¤¹çš„æ‰€æœ‰å­æ–‡ä»¶å¤¹åŠæ–‡ä»¶ï¼Œ
+		 * è‹¥ä¸ºæ–‡ä»¶ï¼Œåˆ™è¿›è¡ŒåŒ¹é…ï¼ŒåŒ¹é…æˆåŠŸåˆ™åŠ å…¥ç»“æœé›†ï¼Œè‹¥ä¸ºå­æ–‡ä»¶å¤¹ï¼Œåˆ™è¿›é˜Ÿåˆ—ã€‚ é˜Ÿåˆ—ä¸ç©ºï¼Œé‡å¤ä¸Šè¿°æ“ä½œï¼Œé˜Ÿåˆ—ä¸ºç©ºï¼Œç¨‹åºç»“æŸï¼Œè¿”å›ç»“æœã€‚
 		 */
 		String tempName = null;
-		// ÅĞ¶ÏÄ¿Â¼ÊÇ·ñ´æÔÚ
+		// åˆ¤æ–­ç›®å½•æ˜¯å¦å­˜åœ¨
 		File baseDir = new File(baseDirName);
 		if (!baseDir.exists() || !baseDir.isDirectory()) {
-			System.out.println("ÎÄ¼ş²éÕÒÊ§°Ü£º" + baseDirName + "²»ÊÇÒ»¸öÄ¿Â¼£¡");
+			System.out.println("æ–‡ä»¶æŸ¥æ‰¾å¤±è´¥ï¼š" + baseDirName + "ä¸æ˜¯ä¸€ä¸ªç›®å½•ï¼");
 		} else {
 			String[] filelist = baseDir.list();
 			for (int i = 0; i < filelist.length; i++) {
@@ -71,9 +71,9 @@ public class Util {
 				if (!readfile.isDirectory()) {
 					tempName = readfile.getName();
 					if (wildcardMatch(targetFileName, tempName)) {
-						// Æ¥Åä³É¹¦£¬½«ÎÄ¼şÃûÌí¼Óµ½½á¹û¼¯
+						// åŒ¹é…æˆåŠŸï¼Œå°†æ–‡ä»¶åæ·»åŠ åˆ°ç»“æœé›†
 						fileList.add(readfile.getAbsoluteFile());
-						System.out.println("²éÕÒ³É¹¦£¬½«ÒÔÏÂÎÄ¼ş½øĞĞ¸´ÖÆ£º" + readfile.getAbsoluteFile().getAbsolutePath());
+						System.out.println("æŸ¥æ‰¾æˆåŠŸï¼Œå°†ä»¥ä¸‹æ–‡ä»¶è¿›è¡Œå¤åˆ¶ï¼š" + readfile.getAbsoluteFile().getAbsolutePath());
 					}
 				} else if (readfile.isDirectory()) {
 					findFiles(baseDirName + "\\" + filelist[i], targetFileName, fileList);
@@ -83,13 +83,13 @@ public class Util {
 	}
 
 	/**
-	 * Í¨Åä·ûÆ¥Åä
+	 * é€šé…ç¬¦åŒ¹é…
 	 * 
 	 * @param pattern
-	 *            Í¨Åä·ûÄ£Ê½
+	 *            é€šé…ç¬¦æ¨¡å¼
 	 * @param str
-	 *            ´ıÆ¥ÅäµÄ×Ö·û´®
-	 * @return Æ¥Åä³É¹¦Ôò·µ»Øtrue£¬·ñÔò·µ»Øfalse
+	 *            å¾…åŒ¹é…çš„å­—ç¬¦ä¸²
+	 * @return åŒ¹é…æˆåŠŸåˆ™è¿”å›trueï¼Œå¦åˆ™è¿”å›false
 	 */
 	public static boolean wildcardMatch(String pattern, String str) {
 		int patternLength = pattern.length();
@@ -99,7 +99,7 @@ public class Util {
 		for (int patternIndex = 0; patternIndex < patternLength; patternIndex++) {
 			ch = pattern.charAt(patternIndex);
 			if (ch == '*') {
-				// Í¨Åä·ûĞÇºÅ*±íÊ¾¿ÉÒÔÆ¥ÅäÈÎÒâ¶à¸ö×Ö·û
+				// é€šé…ç¬¦æ˜Ÿå·*è¡¨ç¤ºå¯ä»¥åŒ¹é…ä»»æ„å¤šä¸ªå­—ç¬¦
 				while (strIndex < strLength) {
 					if (wildcardMatch(pattern.substring(patternIndex + 1), str.substring(strIndex))) {
 						return true;
@@ -107,10 +107,10 @@ public class Util {
 					strIndex++;
 				}
 			} else if (ch == '?') {
-				// Í¨Åä·ûÎÊºÅ?±íÊ¾Æ¥ÅäÈÎÒâÒ»¸ö×Ö·û
+				// é€šé…ç¬¦é—®å·?è¡¨ç¤ºåŒ¹é…ä»»æ„ä¸€ä¸ªå­—ç¬¦
 				strIndex++;
 				if (strIndex > strLength) {
-					// ±íÊ¾strÖĞÒÑ¾­Ã»ÓĞ×Ö·ûÆ¥Åä?ÁË¡£
+					// è¡¨ç¤ºsträ¸­å·²ç»æ²¡æœ‰å­—ç¬¦åŒ¹é…?äº†ã€‚
 					return false;
 				}
 			} else {
@@ -124,7 +124,7 @@ public class Util {
 	}
 	
 	/**
-	 * ¶ÁÈ¡ÅäÖÃÎÄ¼ş×îºóÒ»ĞĞ£¨·½±ãÖ±½ÓÕ³ÌùÎÄ¼şµØÖ·£¬Ê¡µÄ×ªÒå£©
+	 * è¯»å–é…ç½®æ–‡ä»¶æœ€åä¸€è¡Œï¼ˆæ–¹ä¾¿ç›´æ¥ç²˜è´´æ–‡ä»¶åœ°å€ï¼Œçœçš„è½¬ä¹‰ï¼‰
 	 * 
 	 * @param fileName
 	 * @return
@@ -134,7 +134,7 @@ public class Util {
 
 		String result = null;
 		try {
-			InputStreamReader read = new InputStreamReader(new FileInputStream(file), encoding);// ¿¼ÂÇµ½±àÂë¸ñÊ½
+			InputStreamReader read = new InputStreamReader(new FileInputStream(file), encoding);// è€ƒè™‘åˆ°ç¼–ç æ ¼å¼
 			BufferedReader bufferedReader = new BufferedReader(read);
 			String lineTxt = null;
 			while ((lineTxt = bufferedReader.readLine()) != null) {

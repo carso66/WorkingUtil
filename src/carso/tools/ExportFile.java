@@ -10,29 +10,29 @@ import java.util.List;
 
 public class ExportFile {
 
-	// ¼ìË÷Ä¿Â¼
+	// æ£€ç´¢ç›®å½•
 	private static String srcAddress = "";
 
-	// µ¼³öÄ¿Â¼
+	// å¯¼å‡ºç›®å½•
 	private static String desAddress = "";
 
-	// ÏîÄ¿Ãû³Æ
-	private static String projectName = "reportinterface";
+	// é¡¹ç›®åç§°
+	private static String projectName = "ApiService";
 
 	public static void main(String[] args) {
 		System.out.println("----Start----");
 		srcAddress = Util.getOneLineFromFile("resource/srcAddress.properties");
 		desAddress = Util.getOneLineFromFile("resource/desAddress.properties");
 		
-		//¶ÁÈ¡Ä¿±êÎÄ¼şÁĞ±í
+		//è¯»å–ç›®æ ‡æ–‡ä»¶åˆ—è¡¨
 		File fileList = new File("resource/fileList.properties");
 
 		try {
-			InputStreamReader read = new InputStreamReader(new FileInputStream(fileList), Util.encoding);// ¿¼ÂÇµ½±àÂë¸ñÊ½
+			InputStreamReader read = new InputStreamReader(new FileInputStream(fileList), Util.encoding);// è€ƒè™‘åˆ°ç¼–ç æ ¼å¼
 			BufferedReader bufferedReader = new BufferedReader(read);
 			String lineTxt = null;
 			while ((lineTxt = bufferedReader.readLine()) != null) {
-				// ¶ÁÈ¡ÎÄ¼şÁĞ±íÖĞµÄÎÄ¼ş
+				// è¯»å–æ–‡ä»¶åˆ—è¡¨ä¸­çš„æ–‡ä»¶
 				File thisFile = new File(lineTxt);
 				showAllFiles(thisFile);
 			}
@@ -46,13 +46,13 @@ public class ExportFile {
 	
 
 	/**
-	 * ±éÀúÄ¿Â¼ÏÂËùÓĞÎÄ¼ş,Èç¹ûÊÇÎÄ¼ş¼ĞÔò¼ÌĞø±éÀú£¬Èç¹ûÊÇÎÄ¼ş¾ÍÖ±½Óµ¼³ö
+	 * éå†ç›®å½•ä¸‹æ‰€æœ‰æ–‡ä»¶,å¦‚æœæ˜¯æ–‡ä»¶å¤¹åˆ™ç»§ç»­éå†ï¼Œå¦‚æœæ˜¯æ–‡ä»¶å°±ç›´æ¥å¯¼å‡º
 	 * 
 	 * @param dir
 	 * @throws Exception
 	 */
 	private static void showAllFiles(File file) throws Exception {
-		// Èç¹ûÊÇÎÄ¼ş¼ĞÔò¼ÌĞø±éÀú
+		// å¦‚æœæ˜¯æ–‡ä»¶å¤¹åˆ™ç»§ç»­éå†
 		if (file.isDirectory()) {
 			File[] fs = file.listFiles();
 			for (int i = 0; i < fs.length; i++) {
@@ -63,12 +63,12 @@ public class ExportFile {
 
 					}
 				} else if (fs[i].isFile()) {
-					System.out.println("²éÕÒÒÔÏÂÎÄ¼ş²¢µ¼³ö£º" + fs[i].getAbsolutePath());
+					System.out.println("æŸ¥æ‰¾ä»¥ä¸‹æ–‡ä»¶å¹¶å¯¼å‡ºï¼š" + fs[i].getAbsolutePath());
 					exportFile(fs[i]);
 				}
 			}
 		}
-		// Èç¹ûÊÇÎÄ¼ş¾ÍÖ±½Óµ¼³ö
+		// å¦‚æœæ˜¯æ–‡ä»¶å°±ç›´æ¥å¯¼å‡º
 		else {
 			exportFile(file);
 		}
@@ -76,39 +76,38 @@ public class ExportFile {
 	}
 
 	/**
-	 * ¸´ÖÆÎÄ¼şµ½Ö¸¶¨Ä¿Â¼ÏÂ
+	 * å¤åˆ¶æ–‡ä»¶åˆ°æŒ‡å®šç›®å½•ä¸‹
 	 * 
 	 * @param file
 	 */
 	private static void exportFile(File file) {
 		List<File> fileList = new ArrayList<File>();
-		// Ê×ÏÈÈ¥Ö¸¶¨Ä¿Â¼ÏÂ²éÕÒÎÄ¼ş
+		// é¦–å…ˆå»æŒ‡å®šç›®å½•ä¸‹æŸ¥æ‰¾æ–‡ä»¶
 		Util.findFiles(srcAddress + "\\" + projectName, fileNameFilter(file.getName()), fileList);
-		
 		for(File srcFile :fileList){
 			String parentFolderName = srcFile.getParent();
 			String[] pathArray = parentFolderName.split(projectName + "\\\\");
-			// È¡³öÎÄ¼şµÄ¸¸Â·¾¶£¬Ìí¼Óµ½Ä¿±êÄ¿Â¼µØÖ·ÏÂ
+			// å–å‡ºæ–‡ä»¶çš„çˆ¶è·¯å¾„ï¼Œæ·»åŠ åˆ°ç›®æ ‡ç›®å½•åœ°å€ä¸‹
 			String desFolder = desAddress + "\\" + projectName + "\\" + pathArray[1];
 			File parentFolder = new File(desFolder);
 			if (!parentFolder.exists()) {
 				parentFolder.mkdirs();
 			}
-			// ¸´ÖÆÎÄ¼şµ½Ö¸¶¨Ä¿Â¼ÏÂ
+			// å¤åˆ¶æ–‡ä»¶åˆ°æŒ‡å®šç›®å½•ä¸‹
 			try {
 				//File desFile = new File(parentFolder.getAbsolutePath() + "\\" + srcFile.getName());
 				copyFile(srcFile, parentFolder);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}	
-		}		
+		}
 	}
 
 	
 	
 	/**
-	 * ¹ıÂËÒªÆ¥ÅäµÄÎÄ¼ş
-	 * 1£ºÈç¹ûÊÇ.javaÎÄ¼ş£¬Ôò²éÕÒ¶ÔÓ¦µÄclassÎÄ¼ş
+	 * è¿‡æ»¤è¦åŒ¹é…çš„æ–‡ä»¶
+	 * 1ï¼šå¦‚æœæ˜¯.javaæ–‡ä»¶ï¼Œåˆ™æŸ¥æ‰¾å¯¹åº”çš„classæ–‡ä»¶
 	 * 
 	 * @param fileName
 	 * @return
@@ -124,9 +123,9 @@ public class ExportFile {
 	/**
 	 * 
 	 * @param fileIn
-	 *            Òª±»copyµÄÎÄ¼ş
+	 *            è¦è¢«copyçš„æ–‡ä»¶
 	 * @param fileOutPut
-	 *            ½«ÎÄ¼şcopyµ½ÄÇ¸öÄ¿Â¼ÏÂÃæ 
+	 *            å°†æ–‡ä»¶copyåˆ°é‚£ä¸ªç›®å½•ä¸‹é¢ (æ­¤å¤„ä¸ºç›®å½•+è¦å¤åˆ¶çš„æ–‡ä»¶å ä¾‹å¦‚C:\folder + \ + fileName)
 	 * @throws Exception
 	 */
 	private static void copyFile(File fileIn, File fileOutPut) throws Exception {
